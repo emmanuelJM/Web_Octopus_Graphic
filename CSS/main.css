@@ -113,6 +113,16 @@ button.btn.btn-link, a.btn.btn-link {
   margin: 50px auto;
 }
 
+.btn-outline-primary {
+  color: #00A5B5;
+  border-color: #00A5B5;
+}
+
+.btn-outline-primary:hover {
+  color: #ffffff;
+  background: #00A5B5;
+}
+
 .nav-link-primary:hover, .nav-link-primary:active, .nav-link-primary:focus {
   color: #00A5B5 !important;
 }
@@ -806,6 +816,33 @@ input:valid, textarea:valid {
 .row-products {
   margin-top: 40px !important;
   margin-bottom: 40px !important;
+}
+
+.title-products {
+  font-size: 20px;
+  color: #F2F2F2;
+}
+
+.description-products {
+  font-size: 14px;
+  color: #F2F2F2;
+}
+
+.price-products {
+  font-size: 14px;
+  color: #F2F2F2;
+}
+
+.btn-Add-to-cart {
+  width: 100%;
+}
+
+.btn-Add-to-cart {
+  visibility: collapse;
+}
+
+.Product:hover > .Content-Product > .btn-Add-to-cart {
+  visibility: inherit;
 }
 
 /* Footer */

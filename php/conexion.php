@@ -1,8 +1,8 @@
 <?php 
 
 	$hostname = "localhost";
-	$usuariodb= "root";
-	$passworddb = "";
+	$usuariodb= "OctopusGraphic";
+	$passworddb = "Perlita15";
 	$dbname = "cart";
 
 	$connect = new mysqli($hostname, $usuariodb, $passworddb, $dbname);

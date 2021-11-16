@@ -154,6 +154,16 @@ button.btn.btn-link, a.btn.btn-link {
     margin: 50px auto;
 }
 
+.btn-outline-primary{
+    color: $primary;
+    border-color: $primary;
+}
+
+.btn-outline-primary:hover{
+    color: $white;
+    background: $primary;
+}
+
 .nav-link-primary:hover, .nav-link-primary:active, .nav-link-primary:focus {
     color: $primary !important;
 }
@@ -864,6 +874,33 @@ input:valid, textarea:valid{
 .row-products {
     margin-top: 40px !important;
     margin-bottom: 40px !important;
+}
+
+.title-products {
+    font-size: 20px;
+    color: $gray-200;
+}
+
+.description-products{
+    font-size: 14px;
+    color: $gray-200;   
+}
+
+.price-products{
+    font-size: 14px;
+    color: $gray-200;   
+}
+
+.btn-Add-to-cart{
+    width: 100%;
+}
+
+.btn-Add-to-cart {
+    visibility: collapse;
+}
+
+.Product:hover > .Content-Product > .btn-Add-to-cart {
+    visibility: inherit;
 }
 
 /* Footer */

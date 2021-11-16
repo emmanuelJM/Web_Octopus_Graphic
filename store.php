@@ -24,20 +24,20 @@
 
 <!-- CSS -->
 
-  <link rel="stylesheet" href="./CSS/main.css">
+  <link rel="stylesheet" href="CSS/main.css">
 
 <!-- Icons CSS -->
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/v4-shims.css">
-  <link rel="stylesheet" href="./fonts/icomoon/style.css">
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
 
 <!-- jquery -->
 
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
   <title>Octopus Graphic</title>
-  <link rel="shortcut icon" href="./Img/Icon_web.ico">
+  <link rel="shortcut icon" href="Img/Icon_web.ico">
 
 <!-- canonical -->
 
@@ -111,7 +111,7 @@
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
 <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Latest</button>
+  <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Latest</button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
     <li><a class="dropdown-item" href="#">Men</a></li>
     <li><a class="dropdown-item" href="#">Women</a></li>
@@ -120,7 +120,7 @@
 </div>
 
 <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Reference</button>
+  <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Reference</button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
     <li><a class="dropdown-item" href="#">Relevance</a></li>
     <li><a class="dropdown-item" href="#">Name, A to Z</a></li>
@@ -150,17 +150,25 @@ $result = $connect ->query("select * from productos order by id DESC")or die($co
 while($fila = mysqli_fetch_array($result)){
 ?>
 
-<div class="col-sm">
-<div class="block-4 text-center border">
+<div class="col-sm-4">
+<div class="block-4 Product">
 <figure class="block-4-image">
   <a href="ShoppingCart/shop-single.php">
     <img src="img/<?php echo $fila['imagen'];?>" alt="<?php echo $fila['nombre'];?>" class="img-fluid">
   </a>
 </figure>
-<div class="block-4-text p-4">
-  <h3><a href="shop-single.php"><?php echo $fila['nombre'];?></a></h3>
-    <p class="mb-0"><?php echo $fila['descripcion'];?></p>
-    <p class="text-primary font-weight-bold">	₡<?php echo $fila['precio'];?></p>
+<div class="Content-Product">
+  <h3 class="title-products"><?php echo $fila['nombre'];?></h3>
+  <span class="product-rating">
+    <i class="far fa-star"></i>
+    <i class="far fa-star"></i>
+    <i class="far fa-star"></i>
+    <i class="far fa-star"></i>
+    <i class="far fa-star"></i>
+  </span>
+  <p class="description-products"><?php echo $fila['descripcion'];?></p>
+  <p class="price-products">	₡<?php echo $fila['precio'];?></p>
+  <a href="ShoppingCart/shop-single.php" type="button" class="btn btn-outline-primary btn-Add-to-cart">Add to cart</a>
 </div>
 </div>
 </div>
@@ -193,16 +201,16 @@ while($fila = mysqli_fetch_array($result)){
 
 <div class="col-md-3 order-1 mb-5 mb-md-0">
 
-  <div class="border p-4 rounded mb-4">
+  <div class="Filter-Categories">
     <h3 class="mb-3 h6 text-uppercase  d-block">Categories</h3>
     <ul class="list-unstyled mb-0">
-      <li class="mb-1"><a href="#" class="d-flex"><span>Men</span> <span class=" ml-auto">(2,220)</span></a></li>
-      <li class="mb-1"><a href="#" class="d-flex"><span>Women</span> <span class=" ml-auto">(2,550)</span></a></li>
-      <li class="mb-1"><a href="#" class="d-flex"><span>Children</span> <span class=" ml-auto">(2,124)</span></a></li>
+      <li class="mb-1"><a href="#" class="d-flex"><span>Men</span> <span class="ml-auto">(2,220)</span></a></li>
+      <li class="mb-1"><a href="#" class="d-flex"><span>Women</span> <span class="ml-auto">(2,550)</span></a></li>
+      <li class="mb-1"><a href="#" class="d-flex"><span>Children</span> <span class="ml-auto">(2,124)</span></a></li>
     </ul>
   </div>
 
-  <div class="border p-4 rounded mb-4">
+  <div class="Filter">
     <div class="mb-4">
       <h3 class="mb-3 h6 text-uppercase  d-block">Filter by Price</h3>
       <div id="slider-range" class="border-primary"></div>
