@@ -146,29 +146,30 @@
 
 <?php
 include('./php/conexion.php');
-$result = $connect ->query("select * from productos order by id DESC")or die($conectar -> error);
+$result = $connect ->query("select * from productos order by id ASC")or die($conectar -> error);
 while($fila = mysqli_fetch_array($result)){
 ?>
 
 <div class="col-sm-4">
 <div class="block-4 Product">
 <figure class="block-4-image">
-  <a href="ShoppingCart/shop-single.php">
+  <a href="shop-single.php?id=<?php echo $fila['id'];?>">
     <img src="img/<?php echo $fila['imagen'];?>" alt="<?php echo $fila['nombre'];?>" class="img-fluid">
   </a>
 </figure>
+
 <div class="Content-Product">
   <h3 class="title-products"><?php echo $fila['nombre'];?></h3>
-  <span class="product-rating">
-    <i class="far fa-star"></i>
-    <i class="far fa-star"></i>
-    <i class="far fa-star"></i>
-    <i class="far fa-star"></i>
-    <i class="far fa-star"></i>
-  </span>
+
+<div class="hb-ratingbar" data-rated="0">
+  <i class="unfilled"></i>
+  <i class="filled"></i>
+  <svg class="cover" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 50" preserveAspectRatio="none" fill="#12141D"><path d="M0 0v50h250V19l-12 13 3 18-16-9-15 9 3-18-13-13-12 13 3 18-16-9-15 9 3-18-13-13-12 13 3 18-16-9-15 9 3-18-13-13-12 13 3 18-16-9-15 9 3-18-13-13-12 13 3 18-16-9-15 9 3-18L0 19l17-3 8-16Zm50 19 17-3 8-16H25l8 16zm50 0 17-3 8-16H75l8 16zm50 0 17-3 8-16h-50l8 16zm50 0 17-3 8-16h-50l8 16zm25-19 8 16 17 3V0Z"/></svg>
+</div>
+
   <p class="description-products"><?php echo $fila['descripcion'];?></p>
   <p class="price-products">	₡<?php echo $fila['precio'];?></p>
-  <a href="ShoppingCart/shop-single.php" type="button" class="btn btn-outline-primary btn-Add-to-cart">Add to cart</a>
+  <a href="shop-single.php?id=<?php echo $fila['id'];?>" type="button" class="btn btn-outline-primary btn-Add-to-cart">Add to cart</a>
 </div>
 </div>
 </div>
@@ -278,7 +279,9 @@ while($fila = mysqli_fetch_array($result)){
 
   <!-- Js  -->
 
-  <script defer src="JS/main.js"></script>
+  <script defer src="JS/main.js"></script>  
+  <script defer src="JS/shopping_cart.js"></script>
+  <script defer src="JS/owl.carousel.min.js"></script>
 
   <!-- Start of HubSpot Embed Code -->
 
