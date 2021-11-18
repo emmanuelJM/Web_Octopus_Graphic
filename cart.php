@@ -1,9 +1,5 @@
 
 
- 
-
-
-
 
 <!doctype html>
 <html lang="en">
@@ -80,41 +76,53 @@
 
   <div class="container-body">
 
-      <div class="row row-fluid">
+      <div class="row row-fluid row-shopping-cart">
 
         <div class="col-sm col-product-cart">
 
+          <label class="title-shopping-cart" for="coupon">Shopping Cart</label>
+
           <!-- Start Product cart -->
 
-          <table class="table">
+  <table id="cart" class="table table-hover table-condensed">
+    <thead>
 
-            <thead>
-              <tr class="product-table-title">
-                <th scope="col">#ID</th>
-                <th scope="col">Image</th>
-                <th scope="col">Product</th>
-                <th scope="col">Price</th>
-                <th scope="col">Qty</th>
-                <th scope="col">Total</th>
-                <th scope="col">Remove</th>
-              </tr>
-            </thead>
+      <tr class="product-table-title">
+        
+        <th scope="width:5%">#ID</th>
+        <th style="width:40%">Product</th>
+        <th style="width:10%">Price</th>
+        <th style="width:20%">Quantity</th>
+        <th style="width:10%" class="text-center">Subtotal</th>
+        <th style="width:15%"></th>
 
-            <tbody>
-              <tr class="product-detail">
+      </tr>
+    </thead>
 
-                <th scope="row">0001</th>
+    <tbody>
 
-                <td><img src="Img/cloth_1.jpg" alt="Image" class="img-fluid img-product"></td>
+      <tr class="product-detail">
 
-                <td><h2 class="h5 ">Top Up T-Shirt</h2></td>
+        <th data-th="#ID" class="product-id">0001</th>
 
-                <td>$49.00</td>
+        <td data-th="Product">
+          <div class="row">
+            <div class="col-sm-4 hidden-xs col-product-img">
+              <img src="Img/cloth_1.jpg" alt="..." class="img-responsive" />
+            </div>
+            <div class="col-sm-8 col-product-info">
+              <h4 class="nomargin title-description">Top Up T-Shirt</h4>
+              <p class="product-description">Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
+            </div>
+          </div>
+        </td>
 
-                <td>
+        <td data-th="Price" class="product-price">$49.00</td>
 
-                <div>
-                  <div class="input-group mb-3" style="max-width: 120px;">
+        <td data-th="Quantity">
+
+        <div>
+                  <div class="input-group" style="max-width: 120px;">
                     <div class="input-group-prepend">
                       <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
                     </div>
@@ -123,24 +131,32 @@
                       <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
                     </div>
                   </div>
-                </div>
+        </div>
 
-                </td>
+        </td>
 
-                <td>$49.00</td>
+        <td data-th="Subtotal" class="product-price-total">$49.00</td>
 
-                <td><a href="#" class="btn btn-primary btn-sm btn-delete">X</a></td>
+        <td class="actions" data-th="">
+        <button class="btn btn-info btn-sm"><i class="fa fa-pencil-alt"></i></button>
+          <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+        </td>
+        
+      </tr>
 
-              </tr>
-            </tbody>
-          </table>
+    </tbody>
+
+  </table>
+
           
           <!-- End Product cart -->
 
           <!-- Start button cart -->
 
+        <div class="container-btn-cart">
           <button class="btn btn-primary">Update Cart</button>
           <button class="btn btn-outline-primary">Continue Shopping</button>
+        </div>
 
           <!-- End button cart -->
 
@@ -150,7 +166,10 @@
 
           <!-- Start coupon cart -->
 
-          <label class="h4 title-coupon" for="coupon">Coupon</label>
+          
+          <div class="col-sm title-coupon">
+            <h3>Coupon</h3>
+          </div>
           <p>Enter your coupon code if you have one.</p>
 
           <form class="d-flex">
@@ -163,24 +182,24 @@
           <!-- Start Cart Totals -->
 
             <div class="col col-cart-totals">
-              <div class="row">
-                <div class="col-sm">
-                  <h3 class=" h4 text-uppercase">Cart Totals</h3>
+
+                <div class="col-sm col-titel-cart-totals">
+                  <h3>Cart Totals</h3>
                 </div>
-              </div>
+
               <div class="row">
-                <div class="col-sm">
+                <div class="col-sm col-cart-title">
                   <span class="total-title">Subtotal</span>
                 </div>
-                <div class="col-sm">
+                <div class="col-sm col-cart-total">
                   <strong class="total-value"><p>$230.00</p></strong>
                 </div>
               </div>
               <div class="row">
-                <div class="col-sm">
+                <div class="col-sm col-cart-title">
                   <span class="total-title">Total</span>
                 </div>
-                <div class="col-sm ">
+                <div class="col-sm col-cart-total">
                   <strong class="total-value"><p>$230.00</p></strong>
                 </div>
               </div>
@@ -223,12 +242,15 @@
   <!-- Js  -->
 
   <script defer src="JS/main.js"></script>
-  <script defer src="JS/shopping_cart.js"></script>
-  <script defer src="JS/owl.carousel.min.js"></script>
 
   <!-- Start of HubSpot Embed Code -->
 
   <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/20977624.js"></script>
+
+  <!-- Start ShoppingCart code -->
+
+  <script src="JS/owl.carousel.min.js"></script>
+  <script src="JS/shopping_cart.js"></script>
 
 </body>
 </html>

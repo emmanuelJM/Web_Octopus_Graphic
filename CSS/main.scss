@@ -78,18 +78,22 @@ ul > li > a:hover{
     background-color: $secondary !important;
 }
 
-html::-webkit-scrollbar {
+html::-webkit-scrollbar, .table-responsive::-webkit-scrollbar {
     background-color: $secondary;
     width: 13px;
 }
 
-html::-webkit-scrollbar-thumb {
+.table-responsive::-webkit-scrollbar {
+    border-radius: 20px;
+}
+
+html::-webkit-scrollbar-thumb, .table-responsive::-webkit-scrollbar-thumb {
     background-color: $primary;
     border-radius: 20px;
     border: 3px solid $secondary;
 }
 
-html::-webkit-scrollbar-thumb:hover {
+html::-webkit-scrollbar-thumb:hover, .table-responsive::-webkit-scrollbar-thumb:hover {
     background-color: rgb(0, 165, 181, 0.5);
     border-radius: 20px;
 }
@@ -1054,52 +1058,49 @@ input:valid, textarea:valid{
 
 /* Cart */
 
-.product-table-title > th {
-    padding: 0.5rem 0 !important;
-    color: $white;
-    border: none;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.btn-delete {
-    width: 43px;
-}
-
-.img-product {
-    width: 126px;
-}
-
-.product-thumbnail {
-    padding: 0 !important;
-}
-
-.product-detail > td > h2 {
-    color: $white;
-    font-size: 12px !important;
-    text-align: left;
-    margin: 0;
-}
-
-.product-detail > td, .product-detail > th{
-    border: none;
-    color: $white;
-    font-size: 12px !important;
+.col-cart-title, .col-total {
     padding: 0;
-    text-align: left;
-    vertical-align: initial;
 }
 
-.product-thumbnail {
-    width: 138px;
-}
-
-.total-value > p {
+.col-cart-total {
     text-align: right;
+}
+
+.col-titel-cart-totals {
+    padding: 0;
+}
+
+.col-cart-totals {
+    margin-top: 28px;
+}
+
+.col-titel-cart-totals, .title-coupon {
+    border-bottom: 2px solid $primary;
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+.col-titel-cart-totals > h3, .title-coupon > h3 {
+    font-size: 18px;
+}
+
+.row-shopping-cart{
+    padding-top: 30px;
+}
+
+.title-shopping-cart {
+    font-size: 24px;
+    font-weight: 600;
+    padding-bottom: 20px;
+}
+
+.container-btn-cart {
+    margin: 10px 0;
 }
 
 .btn-Checkout {
     width: 100%;
+    margin-top: 15px;
 }
 
 .form-code {
@@ -1111,31 +1112,42 @@ input:valid, textarea:valid{
     border-radius: 0px 0.25rem 0.25rem 0px;
 }
 
-.product-table-title {
-    border-bottom: 1px solid $primary;
+.btn-info {
+    color: #fff;
 }
 
-.product-detail{
-    border-bottom: 1px solid $gray-300;
+.product-table-title > th {
+    border-bottom: 1px solid $primary !important;
+    color: $white;
+    font-size: 14px;
 }
 
-.img-product {
-    padding: 5px;
+.col-product-img{
+    display:block;
+    margin:auto;  
 }
 
-.col-cart-totals {
-    padding-top: 30px;
+.product-id {
+    vertical-align: middle;
+    color: $white;
+    font-size: 13px;
 }
 
-.col-cart-totals > .row >.col-sm {
-    padding: 0;
+.title-description, .product-description, .product-price, .product-price-total{
+    color: $white;
+    font-size: 13px;
 }
 
-.text-uppercase, .title-coupon {
-    border-bottom: 1px solid $primary;
-    padding-bottom: 10px;
-    width: 100%;
+.product-detail > th{
+    border-bottom: 1px solid $gray-300 !important;
+
 }
+
+.table>tbody>tr>td,
+.table>tfoot>tr>td {
+  vertical-align: middle;
+}
+
   
 /* Footer */
 
@@ -1250,6 +1262,81 @@ input:valid, textarea:valid{
     flex: none;
     width: 40.2% !important;
     margin: 25px auto;
+}
+
+/* Cart */
+
+.product-detail {
+    border-bottom: 1px solid $white;
+}
+
+.product-id {
+    display: block;
+    padding: 0.6rem;
+    min-width: 320px;
+    text-align: end;
+    position: absolute;
+    right: 0;
+    margin-right: 40px;
+}
+
+.col-product-img, .col-product-info {
+    padding: 0;
+}
+
+.product-detail > th, .product-detail > td{
+    border: none !important;
+}
+
+table#cart tbody td .form-control {
+    width: 20%;
+    display: inline !important;
+}
+
+.actions .btn {
+    width: 25%;
+}
+
+.actions {
+    margin-bottom: 20px;
+}
+
+.btn-danger {
+    margin-left: 20px;
+}
+
+.btn-info, .btn-danger {
+    float: left;
+}
+
+table#cart thead {
+    display: none;
+}
+
+table#cart tbody td {
+    display: block;
+    padding: .6rem;
+    min-width: 320px;
+    color: $white;
+}
+
+table#cart tbody tr td:first-child {
+    color: $white;
+}
+
+table#cart tbody td:before {
+    content: attr(data-th);
+    font-weight: bold;
+    display: inline-block;
+    width: 8rem;
+}
+
+table#cart tfoot td {
+    display: block;
+}
+
+table#cart tfoot td .btn {
+    display: block;
 }
 
 }
