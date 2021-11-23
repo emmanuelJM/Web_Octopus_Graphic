@@ -1,4 +1,4 @@
-﻿
+﻿<?php session_start(); ?>
 
 <!doctype html>
 <html lang="en">
@@ -65,7 +65,7 @@
 
   <!-- Start header -->
 
-  <?php include("./widget/header.html"); ?> 
+  <?php include("./widget/header.php"); ?> 
 
   <!-- End header -->
 

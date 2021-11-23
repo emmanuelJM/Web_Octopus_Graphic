@@ -57,12 +57,19 @@
                   <li><a href="#"><span class="icon icon-person"></span></a></li>
                   <li><a href="#"><span class="icon icon-heart-o"></span></a></li>
                   <li>
-                    <a href="ShoppingCart/cart.php" class="site-cart">
+                    <a href="cart.php" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
-                      <span class="count">2</span>
+                      <span class="count" id="cart-count">
+                          <?php
+                            if(isset($_SESSION['cart'])){
+                                echo count($_SESSION['cart']);
+                            }else{
+                                echo 0;
+                            }
+                          ?>
+                      </span>
                     </a>
                   </li> 
-                  <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
                 </ul>
               </div> 
         </div>

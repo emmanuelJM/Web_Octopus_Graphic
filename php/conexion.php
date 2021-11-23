@@ -8,6 +8,8 @@
 	$connect = new mysqli($hostname, $usuariodb, $passworddb, $dbname);
 	if($connect -> connect_error){
 		die("could not connect to the server");
-	}
-
+	} 
 ?>
+
+
+

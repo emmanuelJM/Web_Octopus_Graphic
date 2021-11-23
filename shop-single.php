@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include("./php/conexion.php");
 if( isset($_GET['id'])){
   $result = $connect ->query("select * from productos where id=".$_GET['id'])or die($conexion->error);
@@ -73,13 +75,9 @@ if( isset($_GET['id'])){
 
 <body> 
 
-  <!-- Screen Loading -->
-
-  <?php include("./widget/ScreenLoading.html"); ?> 
-
   <!-- Start header -->
 
-  <?php include("./widget/header.html"); ?> 
+  <?php include("./widget/header.php"); ?> 
 
   <!-- End header -->
 
@@ -87,11 +85,36 @@ if( isset($_GET['id'])){
 
   <!-- Start Body -->
 
+<div class="container-body">
+
+<!-- Start alert -->
+
+<?php include("./widget/AlertToasts.html"); ?> 
+
+<!-- end alert -->
+
+  <!-- Start Breadcrumb -->
+
+  <div class="container container-breadcrumb-store">
+  
+    <div class="row row-title row-fluid row-breadcrumb">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="store.php">Store</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><?php echo $fila[2]; ?></li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+
+  <!-- End Breadcrumb -->
+
   <div class="row row-fluid">
 
     <div class="col-sm-6">
 
-      <div class="product-gallery-featured">
+      <div class="product-gallery-featured img-container">
 
         <img src="Img/<?php echo $fila[5]; ?>" class="img-responsive" alt="<?php echo $fila[1]; ?>">
 
@@ -108,7 +131,7 @@ while($fila = mysqli_fetch_array($result)){
 
         <div class="item">
           <li>
-            <img src="img/<?php echo $fila['imagen'];?>" alt="<?php echo $fila['descripción'];?>" class="img-fluid">
+            <img src="img/<?php echo $fila['imagen'];?>" alt="<?php echo $fila['descripción'];?>" class="img-fluid img-product">
           </li>
         </div>
 
@@ -119,7 +142,6 @@ while($fila = mysqli_fetch_array($result)){
     </div>
 
 <?php
-include("./php/conexion.php");
 if( isset($_GET['id'])){
   $result = $connect ->query("select * from productos where id=".$_GET['id'])or die($conexion->error);
   if(mysqli_num_rows($result) > 0){
@@ -132,6 +154,46 @@ if( isset($_GET['id'])){
   //Redirect
   header("Location: ./store.php");
 }
+
+if (isset($_SESSION['cart'])) {
+  // If it exists, we will search if this product has already been added.
+  
+  if(isset($_POST['AddToCart'])) {
+  
+    $arrangement = $_SESSION['cart'];
+    $found = false;
+    $number = 0;
+    for($i=0;$i<count($arrangement);$i++){
+      if($arrangement[$i]['id'] == $_POST['id']){
+        $found = true;
+        $number = $i;
+      }
+    }
+    if($found == true){
+      $arrangement[$number]['quantity']=$arrangement[$number]['quantity']+1;
+      $_SESSION['cart']=$arrangement;
+      {
+        $AlertAddCart = "$('#alert-add-cart').show();";
+      }
+    }
+    else{
+      $arrangementNew = array('id'=>$_POST['id'],'id_productos'=>$_POST['id_productos'],'nombre'=>$_POST['nombre'],'descripcion'=>$_POST['descripcion'],"imagen"=>$_POST['imagen'],'precio'=>$_POST['precio'],'quantity'=>1);
+      array_push($arrangement, $arrangementNew);
+      $_SESSION['cart']=$arrangement;
+      $AlertAddCart = "$('#alert-add-cart').show();";
+    }
+  
+  }
+  
+  }else{
+     // We create the session variable
+    if (isset($_POST['id'])) {
+  
+      $_SESSION['cart'][0]=array('id'=>$_POST['id'],'id_productos'=>$_POST['id_productos'],'nombre'=>$_POST['nombre'],'descripcion'=>$_POST['descripcion'],"imagen"=>$_POST['imagen'],'precio'=>$_POST['precio'],'quantity'=>1);
+      $AlertAddCart = "$('#alert-add-cart').show();";
+    }
+  }
+
 ?>
 
     <div class="col-sm col-product-details">
@@ -175,13 +237,26 @@ if( isset($_GET['id'])){
             <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
           </div>
           </div>
-        </div>
+        </div>  
 
-      <p><a href="cart.php?id=<?php echo $fila[0]; ?>" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+  <form  method="POST" >
+
+    <input type="hidden" name="id" value="<?php echo $fila[0];?>">
+    <input type="hidden" name="nombre" value="<?php echo $fila[2];?>">
+    <input type="hidden" name="descripcion" value="<?php echo $fila[3];?>">
+    <input type="hidden" name="precio" value="<?php echo $fila[4];?>">
+    <input type="hidden" name="imagen" value="<?php echo $fila[5];?>">
+    <input type="hidden" name="id_productos" value="<?php echo $fila[1];?>">
+
+    <button type="button submit" class="buy-now btn btn-sm btn-primary" name="AddToCart">Add To Cart</button>
+
+  </form> 
 
     </div>
 
   </div>
+
+</div>
 
   <!-- End Body -->
 
@@ -216,6 +291,23 @@ if( isset($_GET['id'])){
 
   <script src="JS/owl.carousel.min.js"></script>
   <script src="JS/shopping_cart.js"></script>
+
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/20977624.js"></script>
+
+  <script>
+    <?php
+      if(!empty($AlertAddCart)) {
+        echo $AlertAddCart;
+      }
+    ?>
+
+  
+  function myFunction () {
+    $('#alert-add-cart').toggleClass('alert-add-cart-hide');
+    window.history.back();
+  };
+
+  </script>
 
 </body>
 </html>

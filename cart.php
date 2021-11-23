@@ -1,5 +1,6 @@
-
-
+<?php  
+session_start();
+?>
 
 <!doctype html>
 <html lang="en">
@@ -60,13 +61,9 @@
 
 <body> 
 
-  <!-- Screen Loading -->
-
-  <?php include("./widget/ScreenLoading.html"); ?> 
-
   <!-- Start header -->
 
-  <?php include("./widget/header.html"); ?> 
+  <?php include("./widget/header.php"); ?> 
 
   <!-- End header -->
 
@@ -75,6 +72,23 @@
   <!-- Start Body -->
 
   <div class="container-body">
+
+  <!-- Start Breadcrumb -->
+
+  <div class="container container-breadcrumb-store">
+  
+    <div class="row row-title row-fluid row-breadcrumb">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="store.php">Store</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Cart</li>
+        </ol>
+      </nav>
+    </div>
+
+  </div>
+
+  <!-- End Breadcrumb -->
 
       <div class="row row-fluid row-shopping-cart">
 
@@ -101,61 +115,74 @@
 
     <tbody>
 
+    <?php
+      $total=0;
+      $subtotal=0;
+      if(isset($_SESSION['cart'])){
+        $value = $_SESSION['cart'];
+        for($i=0;$i<count($value);$i++){
+    ?>
+
       <tr class="product-detail">
 
-        <th data-th="#ID" class="product-id">0001</th>
+        <th data-th="id" class="product-id"><?php echo $value[$i]['id_productos']; ?> </th>
 
         <td data-th="Product">
           <div class="row">
             <div class="col-sm-4 hidden-xs col-product-img">
-              <img src="Img/cloth_1.jpg" alt="..." class="img-responsive" />
+              <img src="Img/<?php echo $value[$i]['imagen']; ?>" alt="" class="img-responsive" />
             </div>
             <div class="col-sm-8 col-product-info">
-              <h4 class="nomargin title-description">Top Up T-Shirt</h4>
-              <p class="product-description">Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
+              <h4 class="nomargin title-description"><?php echo $value[$i]['nombre']; ?></h4>
+              <p class="product-description"><?php echo $value[$i]['descripcion']; ?></p>
             </div>
           </div>
         </td>
 
-        <td data-th="Price" class="product-price">$49.00</td>
+        <td data-th="Price" class="product-price">₡<?php echo $value[$i]['precio']; ?></td>
 
         <td data-th="Quantity">
 
-        <div>
-                  <div class="input-group" style="max-width: 120px;">
-                    <div class="input-group-prepend">
-                      <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                    </div>
-                    <input type="text" class="form-control text-center" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                    </div>
-                  </div>
-        </div>
+          <div class="input-group" style="max-width: 120px;">
+            <div class="input-group-prepend">
+              <button class="btn btn-outline-primary js-btn-minus btn-increases" type="button">&minus;</button>
+            </div>
+              <input type="text" class="form-control text-center text-quantity"
+                data-price="<?php echo $value[$i]['precio']; ?>"
+                data-id="<?php echo $value[$i]['id']; ?>"
+                value="<?php echo $value[$i]['quantity']; ?>" 
+                placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary js-btn-plus btn-increases" type="button">&plus;</button>
+            </div>
+          </div>
 
         </td>
 
-        <td data-th="Subtotal" class="product-price-total">$49.00</td>
+        <td data-th="Subtotal" class="cant<?php echo $value[$i]['id']; ?> product-price-total">
+          ₡<?php echo $value[$i]['precio'] * $value[$i]['quantity']; ?>
+        </td>
 
         <td class="actions" data-th="">
-        <button class="btn btn-info btn-sm"><i class="fa fa-pencil-alt"></i></button>
-          <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+          <button class="btn btn-info btn-sm"><i class="fa fa-pencil-alt"></i></button>
+          <button class="btn btn-danger btn-sm btn-delete" data-id=""><i class="fa fa-trash-o"></i></button>
         </td>
         
       </tr>
 
+      <?php } } ?>
+
     </tbody>
 
   </table>
-
-          
+ 
           <!-- End Product cart -->
 
           <!-- Start button cart -->
 
         <div class="container-btn-cart">
           <button class="btn btn-primary">Update Cart</button>
-          <button class="btn btn-outline-primary">Continue Shopping</button>
+          <a class="btn btn-outline-primary" href="store.php">Continue shopping</a>
         </div>
 
           <!-- End button cart -->
@@ -192,7 +219,7 @@
                   <span class="total-title">Subtotal</span>
                 </div>
                 <div class="col-sm col-cart-total">
-                  <strong class="total-value"><p>$230.00</p></strong>
+                  <strong class="total-value"><p>₡<?php echo $total ?></p></strong>
                 </div>
               </div>
               <div class="row">
@@ -200,7 +227,7 @@
                   <span class="total-title">Total</span>
                 </div>
                 <div class="col-sm col-cart-total">
-                  <strong class="total-value"><p>$230.00</p></strong>
+                  <strong class="total-value"><p>₡<?php echo $subtotal ?></p></strong>
                 </div>
               </div>
 
@@ -211,7 +238,6 @@
             <!-- End Cart Totals -->
 
         </div>
-
 
         </div>
 
@@ -251,6 +277,60 @@
 
   <script src="JS/owl.carousel.min.js"></script>
   <script src="JS/shopping_cart.js"></script>
+
+  <script>
+    
+    $(document).ready(function(){
+      $(".btn-delete").click(function(event){
+        event.preventDefault();
+        var id = $(this).data('id');
+        var button = $(this);
+
+        $.ajax({
+          method:'POST',
+          url:'./php/deleteCart.php',
+          data:{
+            id:id
+          }
+        }).done(function(replyDeleted){
+          button.parent('td').parent('tr').remove();
+          $.post('/php/deleteCart.php',)
+        });
+      });
+
+      $(".text-quantity").keyup(function(){
+        var quantity = $(this).val();
+        var price = $(this).data('price');
+        var id = $(this).data('id');
+        increases(quantity, price, id);
+      });
+
+      $(".btn-increases").click(function(){
+        var quantity = $(this).parent('div').parent('div').find('input').val();
+        var price = $(this).parent('div').parent('div').find('input').data('price');
+        var id = $(this).parent('div').parent('div').find('input').data('id');
+        increases(quantity, price, id);
+      });
+
+      function increases(quantity, price, id){
+        var mult = parseFloat(quantity)* parseFloat(price);
+        $(".cant"+id).text("₡"+mult);
+        $.ajax({
+          method:'POST',
+          url:'./php/UpdateCart.php',
+          data:{
+            id:id,
+            quantity:quantity
+          }
+        }).done(function(replyUpdate){
+          
+        });
+        
+      }
+
+    });
+
+  </script>
 
 </body>
 </html>

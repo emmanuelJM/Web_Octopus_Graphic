@@ -1,3 +1,48 @@
+<?php  
+
+session_start();
+include './php/conexion.php';
+if (isset($_SESSION['cart'])) {
+// If it exists, we will search if this product has already been added.
+
+if(isset($_POST['AddToCart'])) {
+
+  $arrangement = $_SESSION['cart'];
+  $found = false;
+  $number = 0;
+  for($i=0;$i<count($arrangement);$i++){
+    if($arrangement[$i]['id'] == $_POST['id']){
+      $found = true;
+      $number = $i;
+    }
+  }
+  if($found == true){
+    $arrangement[$number]['quantity']=$arrangement[$number]['quantity']+1;
+    $_SESSION['cart']=$arrangement;
+    {
+      $AlertAddCart = "$('#alert-add-cart').show();";
+    }
+  }
+  else{
+    $arrangementNew = array('id'=>$_POST['id'],'id_productos'=>$_POST['id_productos'],'nombre'=>$_POST['nombre'],'descripcion'=>$_POST['descripcion'],"imagen"=>$_POST['imagen'],'precio'=>$_POST['precio'],'quantity'=>1);
+    array_push($arrangement, $arrangementNew);
+    $_SESSION['cart']=$arrangement;
+    $AlertAddCart = "$('#alert-add-cart').show();";
+  }
+
+}
+
+}else{
+   // We create the session variable
+  if (isset($_POST['id'])) {
+
+    $_SESSION['cart'][0]=array('id'=>$_POST['id'],'id_productos'=>$_POST['id_productos'],'nombre'=>$_POST['nombre'],'descripcion'=>$_POST['descripcion'],"imagen"=>$_POST['imagen'],'precio'=>$_POST['precio'],'quantity'=>1);
+    $AlertAddCart = "$('#alert-add-cart').show();";
+  }
+}
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -57,13 +102,9 @@
 
 <body> 
 
-<!-- Screen Loading -->
-
-<?php include("./widget/ScreenLoading.html"); ?> 
-
 <!-- Start header -->
 
-<?php include("./widget/header.html"); ?> 
+<?php include("./widget/header.php"); ?> 
 
 <!-- End header -->
 
@@ -72,6 +113,12 @@
 <!-- Start Body -->
 
 <div class="container-body">
+
+<!-- Start alert -->
+
+<?php include("./widget/AlertToasts.html"); ?> 
+
+<!-- end alert -->
 
 <!-- Start Products title -->
 
@@ -150,7 +197,8 @@ $result = $connect ->query("select * from productos order by id ASC")or die($con
 while($fila = mysqli_fetch_array($result)){
 ?>
 
-<div class="col-sm-4">
+<form class="col-sm-4" method="POST" >
+
 <div class="block-4 Product">
 <figure class="block-4-image">
   <a href="shop-single.php?id=<?php echo $fila['id'];?>">
@@ -169,14 +217,26 @@ while($fila = mysqli_fetch_array($result)){
 
   <p class="description-products"><?php echo $fila['descripcion'];?></p>
   <p class="price-products">	₡<?php echo $fila['precio'];?></p>
-  <a href="shop-single.php?id=<?php echo $fila['id'];?>" type="button" class="btn btn-outline-primary btn-Add-to-cart">Add to cart</a>
+
+  <input type="hidden" name="id" value="<?php echo $fila['id'];?>">
+  <input type="hidden" name="nombre" value="<?php echo $fila['nombre'];?>">
+  <input type="hidden" name="descripcion" value="<?php echo $fila['descripcion'];?>">
+  <input type="hidden" name="precio" value="<?php echo $fila['precio'];?>">
+  <input type="hidden" name="imagen" value="<?php echo $fila['imagen'];?>">
+  <input type="hidden" name="id_productos" value="<?php echo $fila['id_productos'];?>">
+
+
+  <button type="button submit" class="btn btn-outline-primary btn-Add-to-cart" name="AddToCart">Add To Cart</button>
+
+
 </div>
 </div>
-</div>
+
+</form> 
 
 <?php } ?>
 
-</div> 
+</div>
 
 <!-- End Products -->
 
@@ -203,7 +263,7 @@ while($fila = mysqli_fetch_array($result)){
 <div class="col-md-3 order-1 mb-5 mb-md-0">
 
   <div class="Filter-Categories">
-    <h3 class="mb-3 h6 text-uppercase  d-block">Categories</h3>
+    <h3 class="mb-3 h6 text-uppercase d-block">Categories</h3>
     <ul class="list-unstyled mb-0">
       <li class="mb-1"><a href="#" class="d-flex"><span>Men</span> <span class="ml-auto">(2,220)</span></a></li>
       <li class="mb-1"><a href="#" class="d-flex"><span>Women</span> <span class="ml-auto">(2,550)</span></a></li>
@@ -285,7 +345,22 @@ while($fila = mysqli_fetch_array($result)){
 
   <!-- Start of HubSpot Embed Code -->
 
-  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/20977624.js"></script>  
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/20977624.js"></script>
+
+  <script>
+    <?php
+      if(!empty($AlertAddCart)) {
+        echo $AlertAddCart;
+      }
+    ?>
+
+  
+  function myFunction () {
+    $('#alert-add-cart').toggleClass('alert-add-cart-hide');
+    window.history.back();  
+  };
+
+  </script>
 
 </body>
 </html>
